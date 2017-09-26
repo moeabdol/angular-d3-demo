@@ -44,7 +44,8 @@ export class AppComponent implements OnInit {
     // this.scaling();
     // this.enterExample();
     // this.transitions();
-    this.importDate();
+    // this.importDate();
+    this.paths();
   }
 
   visualizeOranges() {
@@ -208,5 +209,35 @@ export class AppComponent implements OnInit {
         .attr('x', 5)
         .text((d) => d['name'] + ' ' + d['rank']);
     });
+  }
+
+  paths() {
+    const canvas = d3.select('#paths-container')
+      .append('svg')
+      .attr('width', 500)
+      .attr('height', 500);
+
+    const data = [
+      { x: 10, y: 20 },
+      { x: 100, y: 100 },
+      { x: 10, y: 200 }
+    ];
+
+    const group = canvas.append('g')
+      .attr('transform', 'translate(100, 100)');
+
+    const line = d3.line<any>()
+      .x((d) => d['x'])
+      .y((d) => d['y']);
+
+    group.selectAll('path')
+      .data([data])
+      .enter()
+      .append('path')
+      .attr('d', line)
+      .attr('fill', 'none')
+      .attr('stroke', 'red')
+      .attr('fill', 'green')
+      .attr('stroke-width', 5);
   }
 }
