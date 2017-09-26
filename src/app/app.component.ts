@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 
 import * as d3 from 'd3';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
   constructor() {
@@ -39,7 +40,8 @@ export class AppComponent implements OnInit {
     //   .attr('stroke', 'grey')
     //   .attr('stroke-width', 0.3);
 
-    this.visualizeOranges();
+    // this.visualizeOranges();
+    this.scaling();
   }
 
   visualizeOranges() {
@@ -63,6 +65,34 @@ export class AppComponent implements OnInit {
       })
       .attr('r', function(d) {
         return d;
+      });
+  }
+
+  scaling() {
+    const graphData = [10, 1200];
+    const width = 800;
+    const height = 800;
+
+    const scaling = d3.scaleLinear()
+      .domain([0, 1200])
+      .range([0, width]);
+
+    const canvas = d3.select('#graph-container')
+      .append('svg')
+      .attr('width', width)
+      .attr('height', height);
+
+    const graphBars = canvas.selectAll('rect')
+      .data(graphData)
+      .enter()
+      .append('rect')
+      .attr('fill', 'pink')
+      .attr('width', function(d) {
+        return scaling(d);
+      })
+      .attr('height', 20)
+      .attr('y', (d, i) => {
+        return i * 50;
       });
   }
 }
