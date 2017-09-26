@@ -41,7 +41,8 @@ export class AppComponent implements OnInit {
     //   .attr('stroke-width', 0.3);
 
     // this.visualizeOranges();
-    this.scaling();
+    // this.scaling();
+    this.enterExample();
   }
 
   visualizeOranges() {
@@ -103,5 +104,32 @@ export class AppComponent implements OnInit {
       .append('g')
       .attr('transform', 'translate(0, 100)')
       .call(axis);
+  }
+
+  enterExample() {
+    const data = [200, 100];
+    const width = 800;
+    const height = 600;
+
+    const canvas = d3.select('#graph-container')
+      .append('svg')
+      .attr('width', width)
+      .attr('height', height);
+
+    const box = canvas.append('rect')
+      .attr('width', 300)
+      .attr('height', 300)
+      .attr('fill', 'red');
+
+    const boxes = canvas.selectAll('rect')
+      .data(data)
+      .attr('fill', 'purple')
+      .exit();
+      // .enter()
+      // .append('rect')
+      // .attr('width', (d) => d )
+      // .attr('height', (d) => d)
+      // .attr('fill', 'grey')
+      // .attr('stroke', 'black');
   }
 }
