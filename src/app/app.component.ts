@@ -43,7 +43,8 @@ export class AppComponent implements OnInit {
     // this.visualizeOranges();
     // this.scaling();
     // this.enterExample();
-    this.transitions();
+    // this.transitions();
+    this.importDate();
   }
 
   visualizeOranges() {
@@ -172,5 +173,40 @@ export class AppComponent implements OnInit {
       .transition()
       .duration(1000)
       .attr('cx', 200);
+  }
+
+  importDate() {
+    d3.json('assets/suicide-squad.json', (data) => {
+      console.log(data);
+
+      const canvas = d3.select('#data-container')
+        .append('svg')
+        .attr('width', 1000)
+        .attr('height', 700);
+
+      canvas.selectAll('rect')
+        .data(data)
+        .enter()
+        .append('rect')
+        .attr('width', (d) => {
+          return d['rank'] * 6;
+        })
+        .attr('height', 50)
+        .attr('y', (d, i) => {
+          return i * 80;
+        })
+        .attr('fill', 'red');
+
+      canvas.selectAll('text')
+        .data(data)
+        .enter()
+        .append('text')
+        .attr('fill', '#FFFFFF')
+        .attr('y', (d, i) => {
+          return i * 80 + 30;
+        })
+        .attr('x', 5)
+        .text((d) => d['name'] + ' ' + d['rank']);
+    });
   }
 }
