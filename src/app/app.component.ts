@@ -45,7 +45,8 @@ export class AppComponent implements OnInit {
     // this.enterExample();
     // this.transitions();
     // this.importDate();
-    this.paths();
+    // this.paths();
+    this.donutChart();
   }
 
   visualizeOranges() {
@@ -251,5 +252,55 @@ export class AppComponent implements OnInit {
 
     group.append('path')
       .attr('d', arc);
+  }
+
+  donutChart() {
+    d3.json('assets/suicide-squad.json', (data) => {
+      const radius = 100;
+
+      const color = d3.scaleOrdinal()
+        .range(['red', 'orange', 'yellow', 'blue', 'indigo', 'violet']);
+
+      const canvas = d3.select('#donut-chart')
+        .append('svg')
+        .attr('height', 1000)
+        .attr('width', 1000);
+
+      const group = canvas.append('g')
+        .attr('transform', 'translate(500, 350)');
+
+      const arc = d3.arc<any>()
+        // .innerRadius(150)
+        .innerRadius(0)
+        .outerRadius(radius);
+
+      const pie = d3.pie()
+        .value((d) => {
+          return d['rank'];
+        });
+
+      const theArc = group.selectAll('.arc')
+        .data(pie(data))
+        .enter()
+        .append('g')
+        .attr('class', 'arc');
+
+      theArc.append('path')
+        .attr('d', arc)
+        .attr('fill', 'red');
+        // .attr('fill', (d) => {
+        //   console.log(d.data['rank']);
+        //   return 'red';
+        // });
+
+      theArc.append('text')
+        .attr('transform', (d) => {
+          return 'translate(' + arc.centroid(d) + ')';
+        })
+        .attr('dy', '0.15em')
+        .text((d) => {
+          return d['data']['name'];
+        });
+    });
   }
 }

@@ -14,5 +14,16 @@ svg {
       stroke: #000000;
     }
   }
+
+  .arc {
+    text {
+      font: 10px Arial, Georgia, sans-serif;
+      text-anchor: middle;
+    }
+
+    path {
+      stroke: #FFFFFF;
+    }
+  }
 }
 
