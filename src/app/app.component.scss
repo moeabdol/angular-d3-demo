@@ -1,3 +1,18 @@
 svg {
   border: 1px solid #000000;
+
+  .domain {
+    stroke: #FF0000;
+  }
+
+  .tick {
+    line {
+      stroke: #FF0000;
+    }
+
+    text {
+      stroke: #000000;
+    }
+  }
 }
+

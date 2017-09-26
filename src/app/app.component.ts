@@ -69,7 +69,7 @@ export class AppComponent implements OnInit {
   }
 
   scaling() {
-    const graphData = [10, 1200];
+    const graphData = [100, 1200];
     const width = 800;
     const height = 800;
 
@@ -77,10 +77,14 @@ export class AppComponent implements OnInit {
       .domain([0, 1200])
       .range([0, width]);
 
+    const axis = d3.axisBottom(scaling).ticks(20);
+
     const canvas = d3.select('#graph-container')
       .append('svg')
       .attr('width', width)
-      .attr('height', height);
+      .attr('height', height)
+      .append('g')
+      .attr('transform', 'translate(0, 20)');
 
     const graphBars = canvas.selectAll('rect')
       .data(graphData)
@@ -94,5 +98,10 @@ export class AppComponent implements OnInit {
       .attr('y', (d, i) => {
         return i * 50;
       });
+
+    canvas
+      .append('g')
+      .attr('transform', 'translate(0, 100)')
+      .call(axis);
   }
 }
