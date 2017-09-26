@@ -239,5 +239,17 @@ export class AppComponent implements OnInit {
       .attr('stroke', 'red')
       .attr('fill', 'green')
       .attr('stroke-width', 5);
+
+    const radius = 50;
+    const p = Math.PI * 2;
+
+    const arc = d3.arc()
+      .innerRadius(radius - 10)
+      .outerRadius(radius)
+      .startAngle(0)
+      .endAngle(p);
+
+    group.append('path')
+      .attr('d', arc);
   }
 }
