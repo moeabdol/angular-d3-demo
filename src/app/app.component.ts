@@ -42,7 +42,8 @@ export class AppComponent implements OnInit {
 
     // this.visualizeOranges();
     // this.scaling();
-    this.enterExample();
+    // this.enterExample();
+    this.transitions();
   }
 
   visualizeOranges() {
@@ -131,5 +132,45 @@ export class AppComponent implements OnInit {
       // .attr('height', (d) => d)
       // .attr('fill', 'grey')
       // .attr('stroke', 'black');
+  }
+
+  transitions() {
+    const width = 800;
+    const height = 800;
+
+    const canvas = d3.select('#graph-container')
+      .append('svg')
+      .attr('width', width)
+      .attr('height', height);
+
+    const rect = canvas.append('rect')
+      .attr('width', 100)
+      .attr('height', 100)
+      .attr('fill', 'red');
+
+    const circle = canvas.append('circle')
+      .attr('cx', 50)
+      .attr('cy', 200)
+      .attr('r', 50)
+      .attr('fill', 'blue');
+
+    rect.transition()
+      .duration(3000)
+      .attr('width', 200)
+      .transition()
+      .duration(0)
+      .attr('fill', 'orange');
+
+    circle.transition()
+      .duration(3000)
+      .attr('cx', 70)
+      .attr('cy', 300)
+      .attr('r', 70)
+      .transition()
+      .duration(1000)
+      .attr('fill', 'red')
+      .transition()
+      .duration(1000)
+      .attr('cx', 200);
   }
 }
